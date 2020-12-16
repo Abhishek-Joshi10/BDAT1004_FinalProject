@@ -14,14 +14,13 @@ from django.http import HttpResponse
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
-def getdata():
-       
-                                     
+def getdata(request):
+
+    # For Chennai
     url="https://api.openweathermap.org/data/2.5/weather?q=Chennai&appid=8f0cd00d5b49ffd8ece35b1e2c8c1062"
     req_activity = requests.get(url,headers=headers )
     jsonstr_activity=req_activity.text
     new_json_activity=json.loads(jsonstr_activity)
-    # For Chennai
     Product_Chennai.objects.all().delete()
     row=Product_Chennai()
     row.temp=(new_json_activity['main']['temp'])
@@ -29,6 +28,7 @@ def getdata():
     row.temp_min=(new_json_activity['main']['temp_min'])
     row.temp_max=(new_json_activity['main']['temp_max'])
     row.save()
+
     # For Delhi
     url = "https://api.openweathermap.org/data/2.5/weather?q=Delhi&appid=8f0cd00d5b49ffd8ece35b1e2c8c1062"
     req_activity = requests.get(url, headers=headers)
@@ -71,7 +71,7 @@ def getdata():
     
 def showcharts(request):
     # ModelName.objects.values('Colum_name') To get list of column
-    getdata()
+
     c1 = Product_Chennai.objects.values('temp')
     c2 = Product_Chennai.objects.values('temp_min')
     d1 = Product_Delhi.objects.values('temp')

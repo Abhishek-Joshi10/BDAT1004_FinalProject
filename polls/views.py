@@ -1,6 +1,14 @@
 import pandas as pd
 import requests, base64
 import json
+from time import sleep
+from rest_framework import viewsets
+from .serializer import HeroSerializer
+from .models import Product_Delhi
+
+class HeroViewSet(viewsets.ModelViewSet):
+    queryset = Product_Delhi.objects.all().order_by('temp')
+    serializer_class = HeroSerializer
 
 keyapi='8f0cd00d5b49ffd8ece35b1e2c8c1062'
 b64Val = base64.b64encode(keyapi.encode())
@@ -13,7 +21,10 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+
+    return render(request, 'welcome.html')
+
+
 def getdata(request):
 
     # For Chennai
@@ -22,12 +33,19 @@ def getdata(request):
     jsonstr_activity=req_activity.text
     new_json_activity=json.loads(jsonstr_activity)
     Product_Chennai.objects.all().delete()
+    sleep(2)
     row=Product_Chennai()
+    sleep(2)
     row.temp=(new_json_activity['main']['temp'])
+    sleep(2)
     row.feels_like=(new_json_activity['main']['feels_like'])
+    sleep(2)
     row.temp_min=(new_json_activity['main']['temp_min'])
+    sleep(2)
     row.temp_max=(new_json_activity['main']['temp_max'])
+    sleep(2)
     row.save()
+    sleep(2)
 
     # For Delhi
     url = "https://api.openweathermap.org/data/2.5/weather?q=Delhi&appid=8f0cd00d5b49ffd8ece35b1e2c8c1062"
@@ -35,12 +53,19 @@ def getdata(request):
     jsonstr_activity = req_activity.text
     new_json_activity = json.loads(jsonstr_activity)
     Product_Delhi.objects.all().delete()
+    sleep(2)
     row = Product_Delhi()
+    sleep(2)
     row.temp = (new_json_activity['main']['temp'])
+    sleep(2)
     row.feels_like = (new_json_activity['main']['feels_like'])
+    sleep(2)
     row.temp_min = (new_json_activity['main']['temp_min'])
+    sleep(2)
     row.temp_max = (new_json_activity['main']['temp_max'])
+    sleep(2)
     row.save()
+    sleep(2)
 
     #For Hyderabad
     url = "https://api.openweathermap.org/data/2.5/weather?q=Hyderabad&appid=8f0cd00d5b49ffd8ece35b1e2c8c1062"
@@ -48,12 +73,19 @@ def getdata(request):
     jsonstr_activity = req_activity.text
     new_json_activity = json.loads(jsonstr_activity)
     Product_Hyderabad.objects.all().delete()
+    sleep(2)
     row = Product_Hyderabad()
+    sleep(2)
     row.temp = (new_json_activity['main']['temp'])
+    sleep(2)
     row.feels_like = (new_json_activity['main']['feels_like'])
+    sleep(2)
     row.temp_min = (new_json_activity['main']['temp_min'])
+    sleep(2)
     row.temp_max = (new_json_activity['main']['temp_max'])
+    sleep(2)
     row.save()
+    sleep(2)
 
     # for bangalore
     url = "https://api.openweathermap.org/data/2.5/weather?q=Bangalore&appid=8f0cd00d5b49ffd8ece35b1e2c8c1062"
@@ -61,13 +93,20 @@ def getdata(request):
     jsonstr_activity = req_activity.text
     new_json_activity = json.loads(jsonstr_activity)
     Product_Bangalore.objects.all().delete()
+    sleep(2)
     row = Product_Bangalore()
+    sleep(2)
     row.temp = (new_json_activity['main']['temp'])
+    sleep(2)
     row.feels_like = (new_json_activity['main']['feels_like'])
+    sleep(2)
     row.temp_min = (new_json_activity['main']['temp_min'])
+    sleep(2)
     row.temp_max = (new_json_activity['main']['temp_max'])
+    sleep(2)
     row.save()
-    return HttpResponse('My website')
+    sleep(2)
+    return HttpResponse('Data fetched succesfully go to /charts/')
     
 def showcharts(request):
     # ModelName.objects.values('Colum_name') To get list of column

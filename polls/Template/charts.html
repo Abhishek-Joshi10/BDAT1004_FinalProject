@@ -4,45 +4,91 @@
     <script type="text/javascript">
       google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawChart2);
+      google.charts.setOnLoadCallback(drawChart3);
+      google.charts.setOnLoadCallback(drawChart4);
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['City', 'Temperature', 'Minimum_Temperature'],
-          ['Delhi',{{d1_data}}, {{d2_data}}],
-          ['Hyderabad', {{h1_data}}, {{h2_data}}],
-          ['Chennai', {{c1_data}}, {{c2_data}}],
-          ['Bangalore', {{b1_data}}, {{b2_data}}]
+          ['City', 'Temperature'],
+          ['Delhi',{{d1_data}}],
+          ['Hyderabad', {{h1_data}}],
+          ['Chennai', {{c1_data}}],
+          ['Bangalore', {{b1_data}}]
         ]);
-        var data2 = google.visualization.arrayToDataTable([
-          ['City', 'Temperature', 'Minimum_Temperature'],
-          ['Delhi',{{d1_data}}, 0],
-          ['Hyderabad', {{h1_data}}, {{h2_data}}],
-          ['Chennai', {{c1_data}}, {{c2_data}}],
-          ['Bangalore', {{b1_data}}, {{b2_data}}]
-        ]);
-
         var options = {
           chart: {
             title: 'Temperature of Metro Cities in INDIA',
             subtitle: 'Metro Cities: Delhi, Hyderabad, Bangalore, Chennai',
-          },
-          chart2 : { title: 'Temperature of Metro Cities in INDIA',
-            subtitle: 'Metro Cities: Delhi, Hyderabad, Bangalore, Chennai',
+
           },
           bars: 'horizontal' // Required for Material Bar Charts.
-        };
-
+          };
         var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-        var chart2 = new google.charts.Bar(document.getElementById('barchart_material2'));
-
         chart.draw(data, google.charts.Bar.convertOptions(options));
-        chart2.draw(data2, google.charts.Bar.convertOptions(options));
       }
+      function drawChart2() {
+          var data2 = google.visualization.arrayToDataTable([
+            ['City', 'Minimum_Temperature'],
+            ['Delhi',{{d2_data}} ],
+            ['Hyderabad', {{h2_data}}],
+            ['Chennai', {{c2_data}}],
+            ['Bangalore', {{b2_data}}]
+          ]);
+          var options = {
+
+              title: 'Minimum Temperature of Metro Cities in INDIA',
+              subtitle: 'Metro Cities: Delhi, Hyderabad, Bangalore, Chennai'
+          ,
+          bars: 'vertical' // Required for Material Bar Charts.
+          };
+          var chart2 = new google.charts.Bar(document.getElementById('barchart_material2'));
+          chart2.draw(data2, google.charts.Bar.convertOptions(options));
+        }
+        function drawChart3() {
+          var data3 = google.visualization.arrayToDataTable([
+          ['City', 'Maximum_Temperature'],
+          ['Delhi',{{d3_data}} ],
+          ['Hyderabad', {{h3_data}}],
+          ['Chennai', {{c3_data}}],
+          ['Bangalore', {{b3_data}}]
+        ]);
+
+          var options = {
+
+            title: 'Maximum Temperature of Metro Cities in INDIA',
+            subtitle: 'Metro Cities: Delhi, Hyderabad, Bangalore, Chennai'
+          ,
+          bars: 'horizontal' // Required for Material Bar Charts.
+          };
+          var chart3 = new google.charts.Bar(document.getElementById('barchart_material3'));
+          chart3.draw(data3, google.charts.Bar.convertOptions(options));
+        }
+        function drawChart4() {
+          var data4 = google.visualization.arrayToDataTable([
+          ['City', 'Feels_Like'],
+          ['Delhi',{{d4_data}} ],
+          ['Hyderabad',{{h4_data}}],
+          ['Chennai', {{c4_data}}],
+          ['Bangalore', {{b4_data}}]
+        ]);
+          var options = {
+
+            title: 'Feels like Temperature of Metro Cities in INDIA',
+            subtitle: 'Metro Cities: Delhi, Hyderabad, Bangalore, Chennai'
+          ,
+          bars: 'vertical' // Required for Material Bar Charts.
+          };
+          var chart4 = new google.charts.Bar(document.getElementById('barchart_material4'));
+          chart4.draw(data4, google.charts.Bar.convertOptions(options));
+        }
     </script>
   </head>
   <body>
-    <div id="barchart_material" style="width: 900px; height: 500px;"></div>
-    <div id="barchart_material2" style="width: 600px; height: 300px;"></div>
+    <div id="barchart_material" style="overflow: auto; auto; width: 700px; height: 400px;float: left;"></div>
+    <div id="barchart_material2" style="overflow: auto;width: 700px; height: 400px;float: left;"></div>
+    <div id="barchart_material3" style="overflow: auto;width: 700px; height: 400px;float: left;;"></div>
+    <div id="barchart_material4" style="overflow: auto;width: 700px; height: 400px;float: left;"></div>
   </body>
 
 </html>

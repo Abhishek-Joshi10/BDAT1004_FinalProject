@@ -3,21 +3,35 @@ import requests, base64
 import json
 from time import sleep
 from rest_framework import viewsets
-from .serializer import HeroSerializer
-from .models import Product_Delhi
+from .serializer import DPSerializer
+from .models import Product_Delhi, Product_Chennai, Product_Bangalore,Product_Hyderabad,Country
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.shortcuts import render
+from django.http import HttpResponse
 
-class HeroViewSet(viewsets.ModelViewSet):
-    queryset = Product_Delhi.objects.all().order_by('temp')
-    serializer_class = HeroSerializer
+class DPViewSet(viewsets.ModelViewSet):
+    queryset = Country.objects.all().order_by('temp')
+    serializer_class = DPSerializer
+
+@api_view(['GET'])
+def get1api(request,id):
+    a = Country.objects.filter(index=id)
+    serializer = DPSerializer(a,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getrangeapi(request,slug):
+    begin = slug.split('to')[0]
+    end = slug.split('to')[1]
+    a = Country.objects.filter(index__range=[begin,end])
+    serializer = DPSerializer(a,many=True)
+    return Response(serializer.data)
 
 keyapi='8f0cd00d5b49ffd8ece35b1e2c8c1062'
 b64Val = base64.b64encode(keyapi.encode())
 headers={"Authorization": "Basic %s" % str(b64Val.decode())}
-from django.shortcuts import render
-from .models import Product_Chennai, Product_Bangalore, Product_Delhi, Product_Hyderabad
 
-# Create your views here.
-from django.http import HttpResponse
 
 
 def index(request):
@@ -27,6 +41,9 @@ def index(request):
 
 def getdata(request):
     try:
+        Country.objects.all().delete()
+        row1 = Country()
+
         # For Chennai
         url="https://api.openweathermap.org/data/2.5/weather?q=Chennai&appid=8f0cd00d5b49ffd8ece35b1e2c8c1062"
         req_activity = requests.get(url,headers=headers )
@@ -36,14 +53,21 @@ def getdata(request):
         sleep(2)
         row=Product_Chennai()
         sleep(2)
+        row1.temp = (new_json_activity['main']['temp'])
         row.temp=(new_json_activity['main']['temp'])
         sleep(2)
+        row1.feels_like = (new_json_activity['main']['feels_like'])
         row.feels_like=(new_json_activity['main']['feels_like'])
         sleep(2)
+        row1.temp_min = (new_json_activity['main']['temp_min'])
         row.temp_min=(new_json_activity['main']['temp_min'])
         sleep(2)
+        row1.temp_max = (new_json_activity['main']['temp_max'])
         row.temp_max=(new_json_activity['main']['temp_max'])
         sleep(2)
+        row1.city = 'Chennai'
+        row1.index = 1
+        row1.save()
         row.save()
         sleep(2)
 
@@ -56,14 +80,21 @@ def getdata(request):
         sleep(2)
         row = Product_Delhi()
         sleep(2)
+        row1.temp = (new_json_activity['main']['temp'])
         row.temp = (new_json_activity['main']['temp'])
         sleep(2)
+        row1.feels_like = (new_json_activity['main']['feels_like'])
         row.feels_like = (new_json_activity['main']['feels_like'])
         sleep(2)
+        row1.temp_min = (new_json_activity['main']['temp_min'])
         row.temp_min = (new_json_activity['main']['temp_min'])
         sleep(2)
+        row1.temp_max = (new_json_activity['main']['temp_max'])
         row.temp_max = (new_json_activity['main']['temp_max'])
         sleep(2)
+        row1.city = 'Delhi'
+        row1.index = 2
+        row1.save()
         row.save()
         sleep(2)
 
@@ -76,14 +107,21 @@ def getdata(request):
         sleep(2)
         row = Product_Hyderabad()
         sleep(2)
+        row1.temp = (new_json_activity['main']['temp'])
         row.temp = (new_json_activity['main']['temp'])
         sleep(2)
+        row1.feels_like = (new_json_activity['main']['feels_like'])
         row.feels_like = (new_json_activity['main']['feels_like'])
         sleep(2)
+        row1.temp_min = (new_json_activity['main']['temp_min'])
         row.temp_min = (new_json_activity['main']['temp_min'])
         sleep(2)
+        row1.temp_max = (new_json_activity['main']['temp_max'])
         row.temp_max = (new_json_activity['main']['temp_max'])
         sleep(2)
+        row1.city = 'Hyderabad'
+        row1.index = 3
+        row1.save()
         row.save()
         sleep(2)
 
@@ -96,14 +134,21 @@ def getdata(request):
         sleep(2)
         row = Product_Bangalore()
         sleep(2)
+        row1.temp = (new_json_activity['main']['temp'])
         row.temp = (new_json_activity['main']['temp'])
         sleep(2)
+        row1.feels_like = (new_json_activity['main']['feels_like'])
         row.feels_like = (new_json_activity['main']['feels_like'])
         sleep(2)
+        row1.temp_min = (new_json_activity['main']['temp_min'])
         row.temp_min = (new_json_activity['main']['temp_min'])
         sleep(2)
+        row1.temp_max = (new_json_activity['main']['temp_max'])
         row.temp_max = (new_json_activity['main']['temp_max'])
         sleep(2)
+        row1.city= 'Bangalore'
+        row1.index = 4
+        row1.save()
         row.save()
         sleep(2)
 

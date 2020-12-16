@@ -24,3 +24,11 @@ class Product_Bangalore(models.Model):
     feels_like = models.TextField()
     temp_min = models.TextField()
     temp_max = models.TextField()
+
+class Country(models.Model):
+    index = models.IntegerField()
+    city = models.CharField(max_length=100)
+    temp = models.TextField()
+    feels_like = models.TextField()
+    temp_min = models.TextField()
+    temp_max = models.TextField()

@@ -1,8 +1,10 @@
 from rest_framework import serializers
 
-from .models import Product_Delhi
+from .models import Product_Delhi, Product_Chennai, Product_Bangalore, Product_Hyderabad, Country
 
-class HeroSerializer(serializers.HyperlinkedModelSerializer):
+
+class DPSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Product_Delhi
-        fields = ('temp','feels_like','temp_min','temp_max')
+        model = Country
+        fields = ('index','city','temp', 'feels_like', 'temp_min', 'temp_max')
+

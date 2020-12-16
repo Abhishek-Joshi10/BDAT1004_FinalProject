@@ -16,9 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from polls import views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'API', views.DPViewSet)
 urlpatterns = [
     path('', include('polls.urls')),
     path('admin/', admin.site.urls),
     path('charts/',views.showcharts),
-    path('fetchdata/',views.getdata)
+    path('fetchdata/',views.getdata),
+    path('getone/<int:id>/',views.get1api),
+    path('getbyrange/<str:slug>/',views.getrangeapi)
 ]
